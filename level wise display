@@ -1,0 +1,100 @@
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct node
+{
+   int data;
+   struct node *left,*right;
+}node;
+struct que
+{
+   struct node *data1[MAX];
+   int front,rear;
+};
+struct que q;
+void init()
+{
+  q.front=q.rear=-1;
+}
+int isempty()
+{
+   return(q.front==q.rear);
+}
+int isfull()
+{
+   return(q.rear==MAX-1);
+}
+void add(node *num)
+{
+  q.data1[++q.rear]=num;
+}
+node *delq()
+{
+   return q.data1[++q.front];
+}
+node *create(node *root)
+{
+   node *create(node *root)
+   {
+      node *temp,*newnode,*parent;
+      int i,n;
+      printf("enter limit");
+      scanf("%d",&n);
+      for(i=0;i<n;i++)
+      {
+         newnode=(struct node*)malloc(sizeof(node));
+         printf("enter element");
+         scanf("%d",&newnode->data);
+         newnode->left==NULL;
+         newnode->right==NULL;
+         if(root==NULL)
+         {
+           root=newnode;
+           continue;
+         }
+         temp=root;
+         while(temp!=NULL)
+         {
+            parent=temp;
+            if(newnode->data>parent->data)
+            parent->right=newnode;
+         }
+         return root;
+      }
+   }
+}
+void leveldisp(node *root)
+{
+   int level=0;
+   node *temp,*m=NULL;
+   init();
+   add(root);
+   add(m);
+   printf("\n level=%d=>",level);
+   while(!isempty())
+   {
+      temp=delq();
+      if(temp==m)
+      {
+         level++;
+         if(!isempty())
+         {
+            add(m);
+            printf("\n level%d=>",level);
+         }
+      }
+      else
+      {
+         printf("%d\t",temp->data);
+         if(temp->left)
+         add(temp->left);
+         if(temp->right);
+         add(temp->right);
+      }
+   }
+}
+int main()
+{
+   node *root=NULL;
+   root=create(root);
+   leveldisp(root);
+}
