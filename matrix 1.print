@@ -1,0 +1,36 @@
+#include<stdio.h>
+int main()
+{
+   int a[100][100],n,i,j,in,out;
+   printf("enter n vertices");
+   scanf("%d",&n);
+   printf("enter graph in format of matrix");
+   for(i=1;i<=n;i++)
+   {
+      for(j=1;j<=n;j++)
+      {
+         scanf("%d",&a[i][j]);
+      }
+   }
+   for(i=1;i<=n;i++)
+   {
+     printf("\tv%d",i);
+   for(i=1;i<=n;i++)
+     printf("\nv%d",i);
+     for(j=1;j<=n;j++)
+     {
+       printf("\t%d",a[i][j]);
+     }
+   }
+   for(i=1;i<=n;i++)
+   {
+      in=0;
+      out=0;
+      for(j=1;j<=n;j++)
+      {
+         in=in+a[i][j];
+         out=out+a[i][j];
+      }
+      printf("\nv%d integer=%d\t outdegree=%d",i,in,out);
+   }
+   }
