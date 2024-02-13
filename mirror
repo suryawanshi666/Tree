@@ -1,0 +1,205 @@
+//menu deiven inorder preorder postorder mirror function
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct node
+{
+   int data;
+   struct node *left,*right;
+}node;
+node *create(node *root)
+{
+   int i,n;
+   node *temp=root,*newnode,*parent;
+   printf("enter limit:");
+   scanf("%d",&n);
+   for(i=0;i<n;i++)
+   {
+     newnode=(node*)malloc(sizeof(node));
+     printf("enter value:");
+     scanf("%d",&newnode->data);
+     newnode->left=NULL;
+     newnode->right=NULL;
+     if(root==NULL)
+     {
+        root=newnode;
+        continue;
+     }
+     temp=root;
+     while(temp!=NULL)
+     {
+       parent=temp;
+       if(newnode->data<temp->data)
+       temp=temp->left;
+       else
+       temp=temp->right;
+     }
+     if(newnode->data<parent->data)
+       parent->left=newnode;
+     else
+       parent->right=newnode;
+ }
+ return root;
+}
+	
+node *insert(node *root,int num)
+{
+   int i,n;
+   node *temp=root,*newnode,*parent;
+   printf("enter number to insert:");
+   scanf("%d",&num);
+   newnode=(node*)malloc(sizeof(node));
+   newnode->data=num;
+   newnode->left=NULL;
+   newnode->right=NULL;
+   if(root==NULL)
+   {
+     root=newnode;
+     //continue;
+   }
+   temp=root;
+   while(temp!=NULL)
+   {
+     parent=temp;
+     if(newnode->data<temp->data)
+     temp=temp->left;
+     else
+     temp=temp->right;
+   }
+   if(newnode->data<parent->data)
+     parent->left=newnode;
+  else
+     parent->right=newnode;
+  return root;
+}
+	
+node *inorder(node *root)
+{
+   node*temp=root;
+   if(temp!=NULL)
+   {
+     inorder(temp->left);
+     printf("%d\t",temp->data);
+     inorder(temp->right);
+   }
+}
+node *preorder(node *root)
+{
+   node*temp=root;
+   if(temp!=NULL)
+   {
+      printf("%d\t",temp->data);
+      preorder(temp->left);
+      preorder(temp->right);
+    }
+}
+node *postorder(node *root)
+{
+  node*temp=root;
+  if(temp!=NULL)
+  {
+     postorder(temp->left);
+     postorder(temp->right);
+     printf("%d\t",temp->data);
+   }
+}
+	
+node *leaf(node *root)
+{
+   node *temp=root;
+  static int c=0;
+  if(temp!=NULL)
+  {
+    if(temp->left==NULL &&temp->right==NULL)
+	
+    c++;
+    leaf(temp->left);
+    leaf(temp->right);
+  }
+return c;
+} 
+	
+node *mirror(node *root)
+{
+  node *temp=root,*temp1;
+  if(temp!=NULL)
+  {
+    if(temp->left!=NULL)
+    mirror(temp->left);
+    if(temp->right!=NULL)
+    mirror(temp->right);
+    temp1=temp->left;
+    temp->left=temp->right;
+    temp->right=temp1;
+   }
+return root;
+}
+	
+	
+struct node *copy(node *root)
+{
+  node *temp=root,*newnode;
+  if(temp!=NULL)
+  {
+     newnode=(node*)malloc(sizeof(node));
+     newnode->data=temp->data;
+     newnode->left=copy(temp->left);
+     newnode->right=copy(temp->right);
+     return(newnode);
+   }
+   else
+return NULL;
+}
+int min(node *root)
+{
+  node *temp=root;
+  while(temp->left!=NULL)
+  {
+     temp=temp->left;
+  }
+return temp->data;
+}
+	
+int max(node *root)
+{
+   node *temp=root;
+   while(temp->right!=NULL)
+   {
+     temp=temp->right;
+   }
+return temp->data;
+}
+	
+	
+	
+	
+	
+int main()
+{
+  int num,c;
+  node *root=NULL,*root1=NULL,*temp;
+  root=create(root);
+  //insert(root,num);
+   printf("\n inorder display:");
+   inorder(root);
+   printf("\n preorder display:");
+   preorder(root);
+   printf("\n postorder display:");
+   postorder(root);
+   //printf("\n leaf node =");
+   //printf("%d\t",leaf(root));
+   printf("\n\n mirror image:");
+   root=mirror(root);
+   inorder(root);
+	
+	
+ printf("\n \n copied TREE DISPLAY:\n");
+ root1=copy(root);
+ printf("\n inorder copy tree display:");
+ inorder(root1);
+ printf("\n preorder copy tree display:");
+preorder(root1);
+printf("\n postorder copy tree display display:");
+postorder(root1);
+printf("\n minimum val=%d",min(root));
+printf("\n maximum val=%d",max(root));
+}
