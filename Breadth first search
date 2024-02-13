@@ -1,0 +1,87 @@
+//Breadth fist search
+#include<stdio.h>
+#include<stdlib.h>
+#define max 30
+#define MEMORY (struct node *)malloc(sizeof(struct node))
+typedef struct que
+{
+    struct node *data1[max];
+    int front,rear;
+}que;
+void initq(que *q)
+{
+   q->front=q->rear=-1;
+}
+int isempty(que *q)
+{
+    return(q->front==q->rear);
+}
+int isfull(que *q)
+{
+   return(q->rear==max-1);
+}
+void addq(que *q,int num)
+{
+   q->rear++;
+   q->data1[q->rear]=num;
+}
+int delq(que *q)
+{
+     int num;
+     q->front++;
+     num=q->data1[q->front];
+     return(num);
+}
+void bfs(int a[10][10],int n)
+{
+   que q;
+   int visited[10]={0};
+   int i,j;
+   initq(&q);
+   i=1;
+   visited[i]=1;
+   addq(&q,i);
+   while(!isempty(&q))
+   {
+      i=delq(&q);
+      printf("%d\t",i);
+      for(j=1;j<=n;j++)
+      {
+         if(a[i][j]==1 && visited[j]==0)
+         {
+            addq(&q,j);
+            visited[j]=1;
+         }
+      }
+   }
+}
+int main()
+{
+   int a[10][10],n,i,j;
+   printf("\n enter the vertices=");
+   scanf("%d",&n);
+   printf("\n enter the edges in matrix format=\n");
+   for(i=1;i<=n;i++)
+   {
+      for(j=1;j<=n;j++)
+      {
+          scanf("%d",&a[i][j]);
+      }
+   }
+   printf("\n the adjecency matrix=\n");
+   for(i=1;i<=n;i++)
+   {
+      printf("\t v%d",i);
+   }
+   for(i=1;i<=n;i++)
+   {
+      printf("\n v%d",i);
+      for(j=1;j<=n;j++)
+      {
+         printf("\t%d",a[i][j]);
+      }
+      printf("\n");
+   }
+   printf("\n\n BFS TRAVERSAL IS= ");
+   bfs(a,n);
+}
